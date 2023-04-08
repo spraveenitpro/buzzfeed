@@ -163,7 +163,7 @@ const handleClick = (questionId, chosenAnswer) => {
 		if (itemToRemove > -1) {
 			unansweredQuestions.splice(itemToRemove, 1);
 		}
-		//console.log(questionId);
+		//
 		console.log(chosenAnswers);
 		console.log(unansweredQuestions);
 
