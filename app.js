@@ -94,6 +94,9 @@ const questions = [
 	},
 ];
 
+const unansweredQuestions = [];
+const chosenAnswers = [];
+
 const populateQuestion = () => {
 
 	questions.forEach(question => {
@@ -111,10 +114,12 @@ const populateQuestion = () => {
 		answersBlock.id = question.id + '-questions';
 		answersBlock.classList.add('answer-options');
 
+		unansweredQuestions.push(question.id);
+
 		question.answers.forEach(answer => {
 			const answerBlock = document.createElement('div');
 			answerBlock.classList.add('answer-block');
-			answerBlock.addEventListener('click', () => handleClick)
+			answerBlock.addEventListener('click', () => handleClick(question.id, answer.text))
 
 			const answerImage = document.createElement('img');
 			answerImage.setAttribute('src', answer.image);
@@ -126,6 +131,7 @@ const populateQuestion = () => {
 			const answerInfo = document.createElement('p');
 			const imageLink = document.createElement('a');
 			imageLink.setAttribute('href', answer.credit);
+			imageLink.textContent = answer.credit;
 			const sourceLink = document.createElement('a');
 			sourceLink.textContent = 'Unsplash';
 			sourceLink.setAttribute('href', 'https://unsplash.com/');
@@ -146,6 +152,22 @@ const populateQuestion = () => {
 }
 
 populateQuestion();
-const handleClick = (event) => {
-	console.log("hello");
+
+const handleClick = (questionId, chosenAnswer) => {
+
+
+	if (unansweredQuestions.includes(questionId)) {
+		chosenAnswers.push(chosenAnswer);
+		const itemToRemove = unansweredQuestions.indexOf(questionId);
+
+		if (itemToRemove > -1) {
+			unansweredQuestions.splice(itemToRemove, 1);
+		}
+		//console.log(questionId);
+		console.log(chosenAnswers);
+		console.log(unansweredQuestions);
+
+	}
+
+
 }
