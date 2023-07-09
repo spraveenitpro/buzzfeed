@@ -206,7 +206,7 @@ const handleClick = (questionId, chosenAnswer) => {
 	}
 
 	const showAnswer = () => {
-		//console.log('show answer');
+		console.log('show answer');
 		const answerBlock = document.createElement('div');
 		answerBlock.classList.add('result-block');
 		const answerTitle = document.createElement('h3');
