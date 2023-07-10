@@ -156,7 +156,7 @@ const populateQuestion = () => {
 
 			const answerInfo = document.createElement('p');
 			const imageLink = document.createElement('a');
-			imageLink.setAttribute('href', answer.credit);
+			imageLink.setAttribute('href', answer.image);
 			imageLink.textContent = answer.credit;
 			const sourceLink = document.createElement('a');
 			sourceLink.textContent = 'Unsplash';
@@ -178,6 +178,52 @@ const populateQuestion = () => {
 }
 populateQuestion();
 
+const disableQuestionBlock = (questionId, chosenAnswer) => {
+	const currentQuestionBlock = document.getElementById(questionId + "-questions")
+
+	Array.from(currentQuestionBlock.children).forEach(block => {
+		if (block.children.item(1).innerText !== chosenAnswer) {
+			block.style.opacity = "50%"
+		}
+	})
+}
+
+const showAnswer = () => {
+
+	let result
+	answers.forEach(answer => {
+		if (
+			chosenAnswers.includes(answer.combination[0]) +
+			chosenAnswers.includes(answer.combination[1]) +
+			chosenAnswers.includes(answer.combination[2])
+
+		) {
+			result = answer;
+		} else if (!result) {
+			result = answers[0];
+		}
+	})
+
+	console.log(result);
+	const answerBlock = document.createElement('div');
+	answerBlock.classList.add('result-block');
+	const answerTitle = document.createElement('h3');
+	answerTitle.textContent = result.text;
+	const answerImage = document.createElement('img');
+	answerImage.setAttribute('src', result.image);
+	answerImage.setAttribute('alt', result.alt);
+
+	answerBlock.append(answerTitle, answerImage);
+	answerDisplay.append(answerBlock);
+
+	const allAnswerBlocks = document.querySelectorAll('.answer-block');
+	Array.from(allAnswerBlocks).forEach(answerBlock =>
+		answerBlock.replaceWith(answerBlock.cloneNode(true))
+	);
+
+
+}
+
 const handleClick = (questionId, chosenAnswer) => {
 
 	//console.log(questionId, chosenAnswer);
@@ -193,27 +239,22 @@ const handleClick = (questionId, chosenAnswer) => {
 		console.log(chosenAnswers);
 		console.log(unansweredQuestions);
 
-		//disableQuestionBlock(questionId, chosenAnswer);
+		disableQuestionBlock(questionId, chosenAnswer);
 
 		const lowestQuestionId = Math.min(...unansweredQuestions);
 		location.href = '#' + lowestQuestionId;
 
 
 		if (!unansweredQuestions.length) {
+			location.href = '#answer';
 			showAnswer();
 		}
 
 	}
 
-	const showAnswer = () => {
-		console.log('show answer');
-		const answerBlock = document.createElement('div');
-		answerBlock.classList.add('result-block');
-		const answerTitle = document.createElement('h3');
-		answerTitle.textContent = result.text;
-		const answerImage = document.createElement('img');
-		answerImage.setAttribute('src', result.image);
 
-	}
+
+
 
 }
+
