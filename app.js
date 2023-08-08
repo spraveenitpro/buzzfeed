@@ -94,6 +94,31 @@ const questions = [
 	},
 ];
 
+const answers = [{
+	combination: ["New York", "Pizza", "Traditional"],
+	text: "Blue Cheese",
+	image: "https://images.unsplash.com/photo-1452195100486-9cc805987862?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjczMTc0fQ&w=400&h=400&fit=fillmax",
+	alt: "Blue cheese"
+},
+{
+	combination: ["Austin", "Pasta", "Modern"],
+	text: "Cheddar",
+	image: "https://images.unsplash.com/photo-1618164435735-413d3b066c9a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+	alt: "Cheddar cheese"
+},
+{
+	combination: ["Portland", "Sandwich", "Mountains"],
+	text: "Feta",
+	image: "https://images.unsplash.com/photo-1626957341926-98752fc2ba90?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+	alt: "Feta cheese"
+},
+{
+	combination: ["New Orleans", "Hamburger", "House"],
+	text: "Halloumi",
+	image: "https://images.unsplash.com/photo-1505281036624-fac2862357b8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80",
+	alt: "Halloumi"
+}];
+
 const unansweredQuestions = [];
 const chosenAnswers = [];
 
@@ -115,6 +140,7 @@ const populateQuestion = () => {
 		answersBlock.classList.add('answer-options');
 
 		unansweredQuestions.push(question.id);
+
 
 		question.answers.forEach(answer => {
 			const answerBlock = document.createElement('div');
@@ -150,12 +176,12 @@ const populateQuestion = () => {
 	})
 
 }
-
 populateQuestion();
 
 const handleClick = (questionId, chosenAnswer) => {
 
-
+	//console.log(questionId, chosenAnswer);
+	//console.log(unansweredQuestions);
 	if (unansweredQuestions.includes(questionId)) {
 		chosenAnswers.push(chosenAnswer);
 		const itemToRemove = unansweredQuestions.indexOf(questionId);
@@ -163,11 +189,31 @@ const handleClick = (questionId, chosenAnswer) => {
 		if (itemToRemove > -1) {
 			unansweredQuestions.splice(itemToRemove, 1);
 		}
-		//
+
 		console.log(chosenAnswers);
 		console.log(unansweredQuestions);
 
+		//disableQuestionBlock(questionId, chosenAnswer);
+
+		const lowestQuestionId = Math.min(...unansweredQuestions);
+		location.href = '#' + lowestQuestionId;
+
+
+		if (!unansweredQuestions.length) {
+			showAnswer();
+		}
+
 	}
 
+	const showAnswer = () => {
+		//console.log('show answer');
+		const answerBlock = document.createElement('div');
+		answerBlock.classList.add('result-block');
+		const answerTitle = document.createElement('h3');
+		answerTitle.textContent = result.text;
+		const answerImage = document.createElement('img');
+		answerImage.setAttribute('src', result.image);
+
+	}
 
 }
